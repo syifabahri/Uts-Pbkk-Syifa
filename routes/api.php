@@ -5,6 +5,7 @@ use App\Http\Controllers\BukuController;
 use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\PengarangBukuController;
 use App\Http\Controllers\PengarangController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,13 +23,11 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
+    Route::apiResource('user', UserController::class);
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::resource('data-buku', BukuController::class);
+    Route::apiResource('data-buku', BukuController::class);
     Route::apiResource('data-pengarang', PengarangController::class);
     Route::apiResource('pengarang-buku', PengarangBukuController::class);
     Route::apiResource('data-peminjaman', PeminjamanController::class);
